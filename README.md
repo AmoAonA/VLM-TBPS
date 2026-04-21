@@ -1,85 +1,47 @@
 # Closing the Modality Gap with Symbols: Explicit Attribute Alignment for End-to-End Text-Based Person Search
 
-Official implementation for **ACM MM 2026**.
+**Official implementation for ACM MM 2026**
 
-中文标题：**以符号弥合模态鸿沟：面向端到端文本行人搜索的显式属性对齐**
+**中文标题：以符号弥合模态鸿沟：面向端到端文本行人搜索的显式属性对齐**
 
-Repository name: `VLM-TBPS`
+[[English]](#english) | [[中文]](#中文)
 
-This repository contains the standalone codebase for our
-attribute-word enhanced ViPer pipeline.
+---
 
-Unlike the previous `open_source_release/` bundle, this one already contains the code needed to run:
+<a name="english"></a>
+## English
 
-- `tools/`
-- `psd2/`
-- `configs/`
-- `scripts/`
-- `data_text/`
-- `data_templates/`
+Official implementation of **"Closing the Modality Gap with Symbols: Explicit Attribute Alignment for End-to-End Text-Based Person Search"**, accepted to **ACM MM 2026**.
 
-So if you upload **this folder itself** to GitHub, other users can clone it and run from this repo root after preparing:
+### Overview
 
-- the Python environment
-- the raw dataset files
-- `detectron2`
+This repository contains our attribute-word enhanced text-based person search framework built on top of the ViPer pipeline. The released code supports:
 
-Main point:
-
-- the **open-source target here is the attribute-word branch**
-- the pure `ClipViper` CUHK `0.6275` result is kept only as a **reference baseline**
-
-## Repo structure
-
-```text
-github_open_source_repo/
-├── README.md
-├── ENVIRONMENT.md
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-├── .flake8
-├── .clang-format
-├── configs/
-├── scripts/
-├── data_text/
-├── data_templates/
-├── tools/
-├── psd2/
-```
-
-## Main released path
-
-- PRW stage1 with bundled text annotations
+- PRW stage1 training
 - PRW stage2 attribute-word branch training
 - PRW cache-based evaluation
-- CUHK stage2 attribute-word branch training
-- CUHK attribute positive-only rerank evaluation
-- bundled text/schema release under `data_text/`
-- dataset layout checking
+- CUHK-SYSU stage2 attribute-word branch training
+- CUHK-SYSU positive-only rerank evaluation
+- bundled text / schema files under `data_text/`
 
-## Important boundary
+### Requirements
 
-For the **best verified CUHK stage1 baseline**, we still recommend a **clean official ViPer checkout**.
+- Python >= 3.8
+- PyTorch
+- torchvision
+- `detectron2`
 
-That is why the repo also keeps:
+Environment details are summarized in `ENVIRONMENT.md`.
 
-- `scripts/run_cuhk_stage1_official.sh`
+Install dependencies:
 
-This script is only for reproducing the clean-official reference baseline separately.
-It is **not** the main innovation path of this repo.
+```bash
+pip install -r requirements.txt
+```
 
-## Quick start
+### Data Preparation
 
-### 1. Prepare environment
-
-See:
-
-- `ENVIRONMENT.md`
-
-### 2. Prepare dataset
-
-Raw dataset layout expected at `${DATA_ROOT}`:
+Prepare the raw datasets under `${DATA_ROOT}`:
 
 ```text
 ${DATA_ROOT}/
@@ -96,10 +58,10 @@ ${DATA_ROOT}/
     └── Image/SSM/
 ```
 
-Bundled text / attribute assets are already shipped in this repo:
+This repository already includes the processed text / attribute files:
 
 ```text
-github_open_source_repo/data_text/
+data_text/
 ├── PRW/
 │   ├── generated_schema.json
 │   ├── prw_Final_Complete_cleaned_train.json
@@ -110,14 +72,16 @@ github_open_source_repo/data_text/
     └── CUHK_SYSU_Final_Complete_test_cleaned.json
 ```
 
-Check:
+Check dataset layout:
 
 ```bash
 export DATA_ROOT=/path/to/dataset
 bash scripts/check_dataset_layout.sh
 ```
 
-### 3. PRW stage1
+### Training
+
+#### PRW stage1
 
 ```bash
 export DATA_ROOT=/path/to/dataset
@@ -128,7 +92,7 @@ export NUM_GPUS=1
 bash scripts/run_prw_stage1.sh
 ```
 
-### 4. PRW stage2
+#### PRW stage2
 
 ```bash
 export DATA_ROOT=/path/to/dataset
@@ -140,7 +104,22 @@ export STAGE1_CKPT=/path/to/prw_stage1/model_final.pth
 bash scripts/run_prw_stage2.sh
 ```
 
-### 5. PRW cache evaluation
+#### CUHK-SYSU stage2
+
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
+export STAGE1_CKPT=/path/to/cuhk_stage1/model_final.pth
+export RUN_EVAL_AFTER=1
+
+bash scripts/run_cuhk_stage2.sh
+```
+
+### Evaluation
+
+#### PRW cache evaluation
 
 ```bash
 export PYTHON_BIN=python
@@ -153,23 +132,7 @@ export QUERY_FILE=/path/to/_query_inf.pt
 bash scripts/eval_prw_cache.sh
 ```
 
-### 6. CUHK stage2
-
-By default this runs stage2 training and then evaluates the best verified
-CUHK attribute-word setting: global retrieval plus top/pants positive-only soft rerank.
-
-```bash
-export DATA_ROOT=/path/to/dataset
-export PYTHON_BIN=python
-export CUDA_VISIBLE_DEVICES=0
-export NUM_GPUS=1
-export STAGE1_CKPT=/path/to/official_cuhk_stage1/model_final.pth
-export RUN_EVAL_AFTER=1
-
-bash scripts/run_cuhk_stage2.sh
-```
-
-To evaluate an existing CUHK stage2 checkpoint directly:
+#### CUHK-SYSU stage2 checkpoint evaluation
 
 ```bash
 export DATA_ROOT=/path/to/dataset
@@ -180,75 +143,189 @@ export CKPT=/path/to/cuhk_stage2/model_final.pth
 bash scripts/eval_cuhk_stage2_posrerank.sh
 ```
 
-To run the pure global diagnostic instead:
+To run the pure global diagnostic:
 
 ```bash
 export EVAL_MODE=global
 bash scripts/run_cuhk_stage2.sh
 ```
 
-### 7. Smoke test
+### Project Structure
+
+```text
+├── configs/            # Configuration files
+├── data_templates/     # Public data format examples
+├── data_text/          # Released text / attribute annotations
+├── psd2/               # Core library
+├── scripts/            # Training / evaluation shell scripts
+├── tools/              # Python entrypoints and utilities
+├── ENVIRONMENT.md      # Environment notes
+├── requirements.txt    # Python dependencies
+└── README.md
+```
+
+### Acknowledgments
+
+This codebase is built on top of the ViPer / Detectron-style person search framework. We thank the original authors and open-source contributors for their valuable work.
+
+---
+
+<a name="中文"></a>
+## 中文
+
+这是论文 **《以符号弥合模态鸿沟：面向端到端文本行人搜索的显式属性对齐》** 的官方实现，发表于 **ACM MM 2026**。
+
+### 概述
+
+本仓库实现了基于 ViPer 管线扩展的属性词增强文本行人搜索框架，当前公开内容包括：
+
+- PRW 一阶段训练
+- PRW 二阶段属性词分支训练
+- PRW 基于缓存的评测
+- CUHK-SYSU 二阶段属性词分支训练
+- CUHK-SYSU 正向 rerank 评测
+- `data_text/` 中附带的文本 / 属性 / schema 文件
+
+### 环境要求
+
+- Python >= 3.8
+- PyTorch
+- torchvision
+- `detectron2`
+
+环境说明见 `ENVIRONMENT.md`。
+
+安装依赖：
+
+```bash
+pip install -r requirements.txt
+```
+
+### 数据准备
+
+将原始数据集放在 `${DATA_ROOT}` 下：
+
+```text
+${DATA_ROOT}/
+├── PRW/
+│   ├── query_info.txt
+│   ├── frame_train.mat
+│   ├── frame_test.mat
+│   ├── frames/
+│   └── annotations/
+└── cuhk_sysu/
+    ├── annotation/Images.mat
+    ├── annotation/pool.mat
+    ├── annotation/test/train_test/
+    └── Image/SSM/
+```
+
+仓库中已经附带整理好的文本 / 属性文件：
+
+```text
+data_text/
+├── PRW/
+│   ├── generated_schema.json
+│   ├── prw_Final_Complete_cleaned_train.json
+│   └── prw_Final_Complete_cleaned_test.json
+└── cuhk_sysu/
+    ├── generated_schema.json
+    ├── CUHK_SYSU_Final_Complete_train_cleaned.json
+    └── CUHK_SYSU_Final_Complete_test_cleaned.json
+```
+
+检查数据目录：
 
 ```bash
 export DATA_ROOT=/path/to/dataset
-bash scripts/smoke_test.sh
+bash scripts/check_dataset_layout.sh
 ```
 
-### 8. End-to-end one-iter train smoke test
+### 训练
+
+#### PRW 一阶段
 
 ```bash
 export DATA_ROOT=/path/to/dataset
 export PYTHON_BIN=python
 export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
 
-bash scripts/smoke_train_prw_one_iter.sh
+bash scripts/run_prw_stage1.sh
 ```
 
-This is the quickest end-to-end check that the standalone repo can really
-build the model, load PRW, enter the training loop, and finish one iteration.
+#### PRW 二阶段
 
-## Included public materials
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
+export STAGE1_CKPT=/path/to/prw_stage1/model_final.pth
 
-Release-facing material now lives at repo root:
+bash scripts/run_prw_stage2.sh
+```
 
-- `data_text/`
-- `data_templates/`
-- `configs/open_source/`
-- `scripts/`
+#### CUHK-SYSU 二阶段
 
-Main public configs:
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
+export STAGE1_CKPT=/path/to/cuhk_stage1/model_final.pth
+export RUN_EVAL_AFTER=1
 
-- `configs/open_source/clipviper_prw_stage1_baseline.yaml`
-- `configs/open_source/clipviper_cuhk_stage1_baseline.yaml`
-- `configs/open_source/viper_semantic_cerberus_stage2_attr_from_stage1_bnneckfalse.yaml`
-- `configs/open_source/viper_semantic_cerberus_cuhk_stage2_attr_from_stage1_bnneckfalse.yaml`
-- `configs/open_source/viper_semantic_cerberus_cuhk_stage2_posrerank_eval.yaml`
+bash scripts/run_cuhk_stage2.sh
+```
 
-## Brief result note
+### 评测
 
-- `0.6275` on CUHK is the pure `ClipViper` reference baseline
-- `0.6281` on CUHK is the current attribute-word positive-only rerank result
-- the corresponding CUHK stage2 pure-global diagnostic is `0.6225`
-- standalone result/log summary files are intentionally not bundled in this public repo
+#### PRW 缓存评测
 
-## Data note
+```bash
+export PYTHON_BIN=python
+export DEVICE=cuda:0
+export FUSION_MODE=avg
+export QUERY_BATCH_SIZE=1024
+export GALLERY_FILE=/path/to/_gallery_gt_inf.pt
+export QUERY_FILE=/path/to/_query_inf.pt
 
-- the JSON files under `data_text/` are dataset-derived text / attribute annotations
-- raw images are **not** redistributed in this repo
-- downstream use should still follow the original dataset terms for `PRW` and `CUHK-SYSU`
+bash scripts/eval_prw_cache.sh
+```
 
-## Direct answer to the previous issue
+#### CUHK-SYSU 二阶段模型评测
 
-If you upload only the old `open_source_release/` folder, it is **not enough**.
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export CKPT=/path/to/cuhk_stage2/model_final.pth
 
-If you upload **this** `github_open_source_repo/` folder as a repo, then it is structurally complete enough to run the provided scripts, assuming the environment and datasets are prepared.
+bash scripts/eval_cuhk_stage2_posrerank.sh
+```
 
-## Validation status
+如果要跑纯 global 诊断：
 
-Validated with the environment described in `ENVIRONMENT.md` and dataset root supplied through `DATA_ROOT` / `PSD2_DATA_ROOT`.
+```bash
+export EVAL_MODE=global
+bash scripts/run_cuhk_stage2.sh
+```
 
-Validated items:
+### 项目结构
 
-- `bash scripts/smoke_test.sh`
-- config loading for the public PRW/CUHK configs
-- one-iteration PRW training smoke run via `bash scripts/smoke_train_prw_one_iter.sh`
+```text
+├── configs/            # 配置文件
+├── data_templates/     # 数据格式示例
+├── data_text/          # 开源的文本 / 属性标注
+├── psd2/               # 核心代码库
+├── scripts/            # 训练 / 评测脚本
+├── tools/              # Python 入口与工具脚本
+├── ENVIRONMENT.md      # 环境说明
+├── requirements.txt    # Python 依赖
+└── README.md
+```
+
+### 致谢
+
+本仓库基于 ViPer / Detectron 风格的行人搜索框架扩展实现，感谢相关开源工作与原作者的贡献。
