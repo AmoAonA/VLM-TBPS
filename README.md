@@ -1,6 +1,10 @@
-# VLM-TBPS
+# Closing the Modality Gap with Symbols: Explicit Attribute Alignment for End-to-End Text-Based Person Search
 
-This directory is a **standalone GitHub-ready repo folder** for the
+Official implementation for **ACM MM 2026**.
+
+Repository name: `VLM-TBPS`
+
+This repository contains the standalone codebase for our
 attribute-word enhanced ViPer pipeline.
 
 Unlike the previous `open_source_release/` bundle, this one already contains the code needed to run:
