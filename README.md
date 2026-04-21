@@ -2,6 +2,8 @@
 
 Official implementation for **ACM MM 2026**.
 
+中文标题：**以符号弥合模态鸿沟：面向端到端文本行人搜索的显式属性对齐**
+
 Repository name: `VLM-TBPS`
 
 This repository contains the standalone codebase for our
