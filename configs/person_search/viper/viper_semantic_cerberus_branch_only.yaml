@@ -1,0 +1,13 @@
+_BASE_: "viper_semantic_cerberus_cerberus.yaml"
+PERSON_SEARCH:
+  REID:
+    CERBERUS_TRAIN_BRANCH_ONLY: True
+    CERBERUS_DETACH_VISUAL_INPUTS: True
+SOLVER:
+  BASE_LR: 0.00005
+  MAX_ITER: 10695
+  STEPS: (4278,)
+  LR_FACTORS: [1.0]
+  LR_GROUP_REGEX: ["cerberus_branch.+"]
+  FREEZE_PARAM_REGEX: ["^(?!cerberus_branch\\.).+"]
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_branch_only"

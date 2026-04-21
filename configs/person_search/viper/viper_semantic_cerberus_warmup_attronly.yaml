@@ -1,0 +1,8 @@
+_BASE_: "viper_semantic_cerberus_warmup.yaml"
+PERSON_SEARCH:
+  REID:
+    CERBERUS_STAGE1_BASELINE_ITERS: 4200
+    CERBERUS_STAGE2_FREEZE_NON_BRANCH: True
+    CERBERUS_STAGE2_BRANCH_ONLY: True
+    CERBERUS_STAGE2_DETACH_VISUAL_INPUTS: True
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_warmup_attronly"

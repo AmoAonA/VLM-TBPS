@@ -1,0 +1,48 @@
+{
+  "train_examples": [
+    {
+      "id": 1,
+      "pic_path": "s1.jpg",
+      "description": [
+        "A man wearing a red shirt with a picture on it, a pair of black pants and a pair of gray shoes.",
+        "The man has short black hair. He is wearing a red shirt, black pants, and black shoes."
+      ],
+      "attributes": {
+        "gender": 0,
+        "hair_color": 0,
+        "hair_length": 1,
+        "top_color": 3,
+        "top_style": 0,
+        "pants_color": 0,
+        "pants_style": 1,
+        "shoes_color": 2,
+        "shoes_style": 6,
+        "bag": 0,
+        "umbrella": 0
+      }
+    }
+  ],
+  "test_examples": [
+    {
+      "id": 8,
+      "pic_path": "s12.jpg",
+      "description": [
+        "The man is wearing a blue and black short sleeved shirt and black pants with white sneakers as he walks along the street.",
+        "A man is wearing a blue and black striped shirt with a white collar, white sneakers and a backpack."
+      ],
+      "attributes": {
+        "gender": 0,
+        "hair_color": 10,
+        "hair_length": 4,
+        "top_color": 12,
+        "top_style": 0,
+        "pants_color": 0,
+        "pants_style": 0,
+        "shoes_color": 1,
+        "shoes_style": 0,
+        "bag": 1,
+        "umbrella": 0
+      }
+    }
+  ]
+}

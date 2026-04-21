@@ -1,0 +1,3 @@
+_BASE_: "../../configs/person_search/viper/viper_semantic_cerberus_stage2_attr_from_stage1.yaml"
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_stage2_attr_from_stage1"

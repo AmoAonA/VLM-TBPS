@@ -1,0 +1,5 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+PERSON_SEARCH:
+  REID:
+    CERBERUS_REGION_BRANCH_MODE: "dual"
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_dual_branch"

@@ -1,0 +1,119 @@
+[
+    {
+        "attribute": "gender",
+        "mapping": {
+            "0": "Male",
+            "1": "Female",
+            "2": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "hair_color",
+        "mapping": {
+            "0": "Black",
+            "1": "Brown",
+            "2": "Blonde",
+            "3": "Red",
+            "4": "Gray",
+            "5": "White",
+            "6": "Blue",
+            "7": "Green",
+            "8": "Pink",
+            "9": "Purple",
+            "10": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "hair_length",
+        "mapping": {
+            "0": "Bald",
+            "1": "Short",
+            "2": "Medium",
+            "3": "Long",
+            "4": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "top_color",
+        "mapping": {
+            "0": "Black",
+            "1": "White",
+            "2": "Gray",
+            "3": "Red",
+            "4": "Blue",
+            "5": "Green",
+            "6": "Yellow",
+            "7": "Orange",
+            "8": "Purple",
+            "9": "Pink",
+            "10": "Brown",
+            "11": "Beige",
+            "12": "Multi-color",
+            "13": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "top_style",
+        "mapping": {
+            "0": "T-shirt",
+            "1": "Shirt/Blouse",
+            "2": "Sweater/Hoodie",
+            "3": "Tank Top",
+            "4": "Jacket/Coat",
+            "5": "Dress",
+            "6": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "pants_color",
+        "mapping": {
+            "0": "Black",
+            "1": "White",
+            "2": "Gray",
+            "3": "Blue",
+            "4": "Brown",
+            "5": "Beige",
+            "6": "Red",
+            "7": "Green",
+            "8": "Multi-color",
+            "9": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "pants_style",
+        "mapping": {
+            "0": "Jeans",
+            "1": "Slacks/Trousers",
+            "2": "Shorts",
+            "3": "Leggings/Tights",
+            "4": "Skirt",
+            "5": "Sweatpants",
+            "6": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "shoes_color",
+        "mapping": {
+            "0": "Black",
+            "1": "White",
+            "2": "Brown",
+            "3": "Gray",
+            "4": "Blue",
+            "5": "Red",
+            "6": "Multi-color",
+            "7": "Other/Unknown"
+        }
+    },
+    {
+        "attribute": "shoes_style",
+        "mapping": {
+            "0": "Sneakers",
+            "1": "Dress Shoes",
+            "2": "Boots",
+            "3": "Sandals/Flip-flops",
+            "4": "Flats",
+            "5": "Heels",
+            "6": "Other/Unknown"
+        }
+    }
+]

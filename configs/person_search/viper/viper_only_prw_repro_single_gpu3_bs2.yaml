@@ -1,0 +1,7 @@
+_BASE_: "viper_only_prw_repro.yaml"
+
+SOLVER:
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.0000025
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_only_prw_repro_single_gpu3_bs2"

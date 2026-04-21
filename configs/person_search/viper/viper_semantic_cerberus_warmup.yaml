@@ -1,0 +1,10 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+PERSON_SEARCH:
+  REID:
+    CERBERUS_WARMUP_ITERS: 4200  # 前 5 epoch warmup (840 iters/epoch * 5)
+    CERBERUS_PROTOTYPE_ALIGN_WEIGHT: 0.0  # 关闭 align_loss
+SOLVER:
+  MAX_ITER: 33600  # 40 epoch
+  STEPS: (19600, 28000)
+  CHECKPOINT_PERIOD: 2800
+OUTPUT_DIR: "outputs/viper_cerberus_warmup_clip_init"

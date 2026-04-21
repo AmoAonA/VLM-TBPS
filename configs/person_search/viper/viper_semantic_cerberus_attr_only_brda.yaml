@@ -1,0 +1,14 @@
+_BASE_: "viper_semantic_cerberus_attr_only.yaml"
+
+PERSON_SEARCH:
+  REID:
+    USE_CERBERUS_BRDA: True
+    CERBERUS_BRDA_WEIGHT: 1.0
+    CERBERUS_BRDA_SMOOTHING_FLOOR: 0.05
+    CERBERUS_BRDA_SMOOTHING_CAP: 0.6
+
+SOLVER:
+  LR_GROUP_REGEX: ["cerberus_branch.+", "brda_module.+"]
+  FREEZE_PARAM_REGEX: ["^(?!(cerberus_branch|brda_module)\\.).+"]
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_attr_only_brda"

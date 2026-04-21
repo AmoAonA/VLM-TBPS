@@ -1,0 +1,14 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+
+PERSON_SEARCH:
+  REID:
+    CERBERUS_USE_CARRY_GROUP: True
+    CERBERUS_TRAIN_UNKNOWN_WEIGHT: 0.35
+    CERBERUS_TRAIN_GROUP_WEIGHT_MODE: "avg"
+    CERBERUS_GROUP_LOSS_WEIGHTS: [0.1, 1.0, 1.2, 1.2, 1.0, 0.8]
+
+TEST:
+  SEARCH_AVG_PART_WEIGHTS: [0.1, 1.0, 1.2, 1.2, 1.0, 0.8]
+  SEARCH_PART_VOTE_WEIGHTS: [0.1, 0.20, 0.35, 0.30, 0.10, 0.15]
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_carry_weighted"

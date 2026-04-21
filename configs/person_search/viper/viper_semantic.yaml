@@ -1,0 +1,97 @@
+_BASE_: "base_tbps.yaml"
+MODEL:
+  META_ARCHITECTURE: "ClipSimpleSemantic"
+#  META_ARCHITECTURE: "ClipViper"
+  ROI_HEADS:
+#    SCORE_THRESH_TEST: 0.05
+    IOU_THRESHOLDS: [0.5]
+    IOU_LABELS: [0, 1]
+    BATCH_SIZE_PER_IMAGE: 128
+  ROI_BOX_HEAD:
+    SMOOTH_L1_BETA: 0.
+    POOLER_SAMPLING_RATIO: 0
+PERSON_SEARCH:
+  DET:
+    CLIP:
+      FREEZE_AT_STAGE2: False
+      FROZEN_BN: False
+      TEXT_DROPOUT: 0.2
+  REID:
+    MODEL:
+      EMB_DIM: 1024  # 1024 (org) + 1024 (ech) + 1024 (rm)
+      BN_NECK: True
+    # ===== Box Augmentation (from clipviper_prw.yaml) =====
+    BOX_AUGMENTATION:
+      NAME: "dn_detr"
+      H_CENTER: 0.4
+      H_SCALE: 0.2
+      NUM_LABELED: 3
+      APPEND_GT: True
+      NUM_UNLABLED: 3
+    
+    # ===== Attention Mechanism (from clipviper_prw.yaml) =====
+    ATTN:
+      RM_MIN: 1
+      RM_MAX: 4
+      ECH_MIN: 4
+      ECH_MAX: 8
+    
+    # ===== MIM Loss (from clipviper_prw.yaml) =====
+    MIM_RATIO: 0.5
+    MIM_LOSS_W: 1.0
+    
+    # ===== Semantic Prototype Branch Settings =====
+    USE_SEMANTIC_BRANCH: True
+    USE_SEMANTIC_LOSS: True
+    SEMANTIC_LOSS_WEIGHT: 1
+
+    # Semantic prototype settings
+    SEMANTIC_DIM: 512
+    NUM_PATCHES: 32  # 7x7 grid = 49
+    SCHEMA_PATH: "data_text/PRW/generated_schema.json"
+    SEMANTIC_ALPHA: 0.4
+    SEMANTIC_BETA: 1.2
+    
+    # OIM loss settings
+    ID_ASSIGN:
+      NAME: "det"
+    LOSS:
+      OIM:
+        LB_LAYER: "lb_norm"
+        ULB_LAYER: "ulb_full"
+        LB_FACTOR: 30
+        ULB_FACTOR: 30
+        NUM_LB: 483
+        LEN_ULB: 500
+        FEAT_DIM: 1024  # Match EMB_DIM
+        NORM_FEAT: True
+        SYNC_MEMORY: False
+        USE_FOCAL: True
+        FOCAL_ALPHA: 1.0
+        FOCAL_GAMMA: 2.0
+        LOSS_WEIGHT: 1.0
+    CWS: True
+    
+SOLVER:
+  OPTIM: "AdamW"
+  BASE_LR: 0.00001
+  MAX_ITER: 21390
+  STEPS: (8556,)
+  CHECKPOINT_PERIOD: 1000
+  WARMUP_ITERS: 713
+  IMS_PER_BATCH: 8
+  LR_FACTORS: [5.0,5.0,1.0] # 可调整
+  LR_GROUP_REGEX: ["proposal_generator.+","roi_heads.box_predictor.+","semantic_branch.+"]
+  WEIGHT_DECAY_BIAS: 0.0
+
+DATASETS:
+  TRAIN: ("PRW_TBPS_Train",)
+  TEST: ("PRW_TBPS_Gallery", "PRW_TBPS_Query",)
+TEST:
+  EVAL_PERIOD: 20
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic"
+INPUT:
+  # Load attribute annotations for semantic loss
+  LOAD_ATTRIBUTES: True
+  ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_train.json"
+  TEST_ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_test.json"

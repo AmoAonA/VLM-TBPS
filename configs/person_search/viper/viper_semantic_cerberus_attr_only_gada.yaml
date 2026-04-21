@@ -1,0 +1,12 @@
+_BASE_: "viper_semantic_cerberus_attr_only.yaml"
+
+PERSON_SEARCH:
+  REID:
+    USE_CERBERUS_GADA: True
+    CERBERUS_GADA_WEIGHT: 0.5
+
+SOLVER:
+  LR_GROUP_REGEX: ["cerberus_branch.+", "gada_module.+"]
+  FREEZE_PARAM_REGEX: ["^(?!(cerberus_branch|gada_module)\\.).+"]
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_attr_only_gada"

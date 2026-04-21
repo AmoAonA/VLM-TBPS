@@ -1,0 +1,3 @@
+_BASE_: "../../configs/person_search/viper/viper_semantic_cerberus_cuhk_stage2_attr_from_stage1_bnneckfalse.yaml"
+
+OUTPUT_DIR: "outputs/viper/CUHK-SYSU/viper_semantic_cerberus_cuhk_stage2_attr_from_stage1_bnneckfalse"

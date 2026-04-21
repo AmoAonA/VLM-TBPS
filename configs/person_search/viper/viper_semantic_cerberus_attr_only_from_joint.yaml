@@ -1,0 +1,14 @@
+_BASE_: "viper_semantic_cerberus_attr_only.yaml"
+
+MODEL:
+  # Pass the actual joint-training checkpoint from CLI if you want a different run.
+  WEIGHTS: "outputs/viper/PRW/viper_semantic_cerberus_joint_alltrain_20260320/model_final.pth"
+
+SOLVER:
+  BASE_LR: 0.00001
+  MAX_ITER: 8400
+  STEPS: (5600,)
+  WARMUP_ITERS: 500
+  CHECKPOINT_PERIOD: 700
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_attr_only_from_joint"

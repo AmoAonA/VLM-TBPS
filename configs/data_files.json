@@ -1,0 +1,10 @@
+{
+  "cuhk_sysu": {
+    "train": "CUHK-SYSU-TBPS_train",
+    "test": "CUHK-SYSU-TBPS_test"
+  },
+  "prw": {
+    "train": "prw_output_attributes_train.json",
+    "test": "PRW-TBPS_test"
+  }
+}

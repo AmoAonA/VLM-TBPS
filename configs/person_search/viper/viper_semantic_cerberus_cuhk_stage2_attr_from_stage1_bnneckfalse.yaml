@@ -1,0 +1,44 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+
+MODEL:
+  WEIGHTS: ""
+  ROI_HEADS:
+    BATCH_SIZE_PER_IMAGE: 128
+
+PERSON_SEARCH:
+  REID:
+    MODEL:
+      BN_NECK: False
+    CERBERUS_TRAIN_BRANCH_ONLY: True
+    CERBERUS_DETACH_VISUAL_INPUTS: True
+    CERBERUS_PROTOTYPE_ALIGN_WEIGHT: 0.1
+    SCHEMA_PATH: "data_text/cuhk_sysu/generated_schema.json"
+    LOSS:
+      OIM:
+        NUM_LB: 5532
+        LEN_ULB: 5000
+
+SOLVER:
+  BASE_LR: 0.00005
+  MAX_ITER: 16800
+  STEPS: (9800,)
+  WARMUP_ITERS: 1400
+  CHECKPOINT_PERIOD: 1400
+  IMS_PER_BATCH: 8
+  LR_FACTORS: [1.0]
+  LR_GROUP_REGEX: ["cerberus_branch.+"]
+  FREEZE_PARAM_REGEX: ['^(?!cerberus_branch\.).+']
+
+DATASETS:
+  TRAIN: ("CUHK-SYSU_TBPS_Train",)
+  TEST: ("CUHK-SYSU_TBPS_Gallery", "CUHK-SYSU_TBPS_TestG100",)
+
+INPUT:
+  LOAD_ATTRIBUTES: True
+  ATTRIBUTE_ANNOTATIONS_PATH: "data_text/cuhk_sysu/CUHK_SYSU_Final_Complete_train_cleaned.json"
+  TEST_ATTRIBUTE_ANNOTATIONS_PATH: "data_text/cuhk_sysu/CUHK_SYSU_Final_Complete_test_cleaned.json"
+
+TEST:
+  EVAL_PERIOD: 0
+
+OUTPUT_DIR: "outputs/viper/CUHK-SYSU/viper_semantic_cerberus_cuhk_stage2_attr_from_stage1_bnneckfalse"

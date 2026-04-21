@@ -1,0 +1,9 @@
+_BASE_: "clipviper_prw.yaml"
+
+MODEL:
+  META_ARCHITECTURE: "ClipViper"
+
+TEST:
+  EVAL_PERIOD: 0
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_only_prw_repro"

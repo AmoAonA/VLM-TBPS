@@ -1,0 +1,9 @@
+numpy
+scipy
+Pillow
+opencv-python
+tqdm
+pyyaml
+yacs
+fvcore
+iopath

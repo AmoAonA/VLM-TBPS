@@ -1,0 +1,47 @@
+{
+  "train_examples": [
+    {
+      "id": 1,
+      "pic_path": "c1s1_001051.jpg",
+      "description": [
+        "The young woman with her back to us has black hair on her shoulders. She wears a white lace dress and pink shoes."
+      ],
+      "attributes": {
+        "gender": 1,
+        "hair_color": 0,
+        "hair_length": 2,
+        "top_color": 1,
+        "top_style": 5,
+        "pants_color": 9,
+        "pants_style": 6,
+        "shoes_color": 7,
+        "shoes_style": 4,
+        "bag": 0,
+        "umbrella": 0
+      }
+    }
+  ],
+  "test_examples": [
+    {
+      "id": 479,
+      "pic_path": "c1s3_016471.jpg",
+      "description": [
+        "A woman is wearing a white shirt, a pair of grey pants and a pair of grey shoes, her hair is black and long.",
+        "This woman with long straight black hair is walking. She is wearing a pink sleeveless shirt and grey trousers."
+      ],
+      "attributes": {
+        "gender": 1,
+        "hair_color": 0,
+        "hair_length": 3,
+        "top_color": 9,
+        "top_style": 3,
+        "pants_color": 2,
+        "pants_style": 1,
+        "shoes_color": 2,
+        "shoes_style": 6,
+        "bag": 0,
+        "umbrella": 0
+      }
+    }
+  ]
+}

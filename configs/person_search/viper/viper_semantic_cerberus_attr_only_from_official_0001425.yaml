@@ -1,0 +1,14 @@
+_BASE_: "viper_semantic_cerberus_attr_only.yaml"
+
+MODEL:
+  WEIGHTS: "outputs/viper/PRW/clipviper_prw/model_0001425.pth"
+
+INPUT:
+  ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_train.json"
+  TEST_ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_test.json"
+
+PERSON_SEARCH:
+  REID:
+    SCHEMA_PATH: "data_text/PRW/generated_schema.json"
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_attr_only_from_official_0001425"

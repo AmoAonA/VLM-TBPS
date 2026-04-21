@@ -1,0 +1,13 @@
+_BASE_: "viper_semantic_cerberus_attr_only.yaml"
+
+PERSON_SEARCH:
+  REID:
+    USE_CERBERUS_MEMORY_BANK: True
+    CERBERUS_MEMORY_QUEUE_SIZE: 256
+    CERBERUS_MEMORY_LOSS_WEIGHT: 0.5
+
+SOLVER:
+  LR_GROUP_REGEX: ["cerberus_branch.+", "memory_bank.+"]
+  FREEZE_PARAM_REGEX: ["^(?!(cerberus_branch|memory_bank)\\.).+"]
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_attr_only_memory"

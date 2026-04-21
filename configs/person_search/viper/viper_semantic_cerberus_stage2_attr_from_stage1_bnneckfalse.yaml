@@ -1,0 +1,8 @@
+_BASE_: "viper_semantic_cerberus_stage2_attr_from_stage1.yaml"
+
+PERSON_SEARCH:
+  REID:
+    MODEL:
+      BN_NECK: False
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_stage2_attr_from_stage1_bnneckfalse"

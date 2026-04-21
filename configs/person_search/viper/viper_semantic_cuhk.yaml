@@ -1,0 +1,100 @@
+_BASE_: "base_tbps.yaml"
+
+MODEL:
+  META_ARCHITECTURE: "ClipSimpleSemantic"
+  ROI_HEADS:
+    IOU_THRESHOLDS: [0.5]
+    IOU_LABELS: [0, 1]
+    # CUHK 推荐 128
+    BATCH_SIZE_PER_IMAGE: 128
+  ROI_BOX_HEAD:
+    SMOOTH_L1_BETA: 0.
+    POOLER_SAMPLING_RATIO: 0
+
+PERSON_SEARCH:
+  DET:
+    CLIP:
+      FREEZE_AT_STAGE2: False
+      FROZEN_BN: False
+      TEXT_DROPOUT: 0.2
+  REID:
+    MODEL:
+      EMB_DIM: 1024
+      BN_NECK: True
+    BOX_AUGMENTATION:
+      NAME: "dn_detr"
+      H_CENTER: 0.4
+      H_SCALE: 0.2
+      NUM_LABELED: 3
+      APPEND_GT: True
+      NUM_UNLABLED: 3
+
+    ATTN:
+      RM_MIN: 1
+      RM_MAX: 4
+      ECH_MIN: 4
+      ECH_MAX: 8
+
+    MIM_RATIO: 0.5
+    MIM_LOSS_W: 1.0
+
+    # ===== Semantic Branch Settings =====
+    USE_SEMANTIC_BRANCH: True
+    USE_SEMANTIC_LOSS: True
+    SEMANTIC_LOSS_WEIGHT: 1.0
+
+    SEMANTIC_DIM: 512
+    NUM_PATCHES: 32
+    # 【重要】请修改为 CUHK 的 Schema 路径
+    SCHEMA_PATH: "data_text/cuhk_sysu/generated_schema.json"
+    SEMANTIC_ALPHA: 0.4
+    SEMANTIC_BETA: 1.2
+
+    # ===== OIM Loss (CUHK 参数) =====
+    ID_ASSIGN:
+      NAME: "det"
+    LOSS:
+      OIM:
+        LB_LAYER: "lb_norm"
+        ULB_LAYER: "ulb_full"
+        LB_FACTOR: 30
+        ULB_FACTOR: 30
+        # 【重要】CUHK 身份数
+        NUM_LB: 5532
+        # 【重要】CUHK 队列长度
+        LEN_ULB: 5000
+        FEAT_DIM: 1024
+        NORM_FEAT: True
+        SYNC_MEMORY: False
+        USE_FOCAL: True
+        FOCAL_ALPHA: 1.0
+        FOCAL_GAMMA: 2.0
+        LOSS_WEIGHT: 1.0
+    CWS: True
+
+SOLVER:
+  OPTIM: "AdamW"
+  BASE_LR: 0.00001
+  MAX_ITER: 33600
+  STEPS: (19600,)
+  CHECKPOINT_PERIOD: 2800
+  WARMUP_ITERS: 1400
+  IMS_PER_BATCH: 8
+  LR_FACTORS: [5.0, 5.0, 1.0]
+  LR_GROUP_REGEX: ["proposal_generator.+", "roi_heads.box_predictor.+", "semantic_branch.+"]
+  WEIGHT_DECAY_BIAS: 0.0
+
+
+DATASETS:
+  TRAIN: ("CUHK-SYSU_TBPS_Train",)
+  TEST: ("CUHK-SYSU_TBPS_Gallery", "CUHK-SYSU_TBPS_TestG100",)
+
+TEST:
+  EVAL_PERIOD: 2800
+
+OUTPUT_DIR: "outputs/viper/cuhk-sysu/viper_semantic"
+
+INPUT:
+  LOAD_ATTRIBUTES: True
+  ATTRIBUTE_ANNOTATIONS_PATH: "data_text/cuhk_sysu/CUHK_SYSU_Final_Complete_train_cleaned.json"
+  TEST_ATTRIBUTE_ANNOTATIONS_PATH: "data_text/cuhk_sysu/CUHK_SYSU_Final_Complete_test_cleaned.json"

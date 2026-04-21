@@ -1,0 +1,95 @@
+_BASE_: "base_tbps.yaml"
+MODEL:
+  META_ARCHITECTURE: "ClipSimpleCerberusPS"
+  ROI_HEADS:
+    IOU_THRESHOLDS: [0.5]
+    IOU_LABELS: [0, 1]
+    BATCH_SIZE_PER_IMAGE: 256
+  ROI_BOX_HEAD:
+    SMOOTH_L1_BETA: 0.
+    POOLER_SAMPLING_RATIO: 0
+PERSON_SEARCH:
+  DET:
+    CLIP:
+      FREEZE_AT_STAGE2: False
+      FROZEN_BN: False
+      TEXT_DROPOUT: 0.2
+  REID:
+    MODEL:
+      EMB_DIM: 1024
+      BN_NECK: True
+    BOX_AUGMENTATION:
+      NAME: "dn_detr"
+      H_CENTER: 0.4
+      H_SCALE: 0.2
+      NUM_LABELED: 3
+      APPEND_GT: True
+      NUM_UNLABLED: 3
+    ATTN:
+      RM_MIN: 1
+      RM_MAX: 4
+      ECH_MIN: 4
+      ECH_MAX: 8
+    MIM_RATIO: 0.5
+    MIM_LOSS_W: 1.0
+    USE_CERBERUS_BRANCH: True
+    USE_CERBERUS_LOSS: True
+    CERBERUS_LOSS_WEIGHT: 1.0
+    CERBERUS_GROUP_SCORE_WEIGHT: 0.1
+    CERBERUS_SEMANTIC_DIM: 512
+    CERBERUS_LOGIT_SCALE: 30.0
+    CERBERUS_PROTOTYPE_ALIGN_WEIGHT: 0.0  # Disabled: not in original Cerberus paper
+    CERBERUS_REGION_BRANCH_MODE: "sfan"
+    CERBERUS_SFAN_THRESHOLD: 0.2
+    CERBERUS_SFAN_TEMPERATURE: 0.07
+    CERBERUS_SFAN_BRANCH_WEIGHT: 0.5
+    CERBERUS_USE_HEATMAP_PARTITION: True
+    CERBERUS_HEATMAP_THRESHOLD: 0.35
+    CERBERUS_PRIOR_GAIN: 1.0
+    CERBERUS_GUIDANCE_ALPHA: 0.4
+    CERBERUS_GUIDANCE_BETA: 1.8
+    CERBERUS_RELATION_REG_WEIGHT: 0.05
+    CERBERUS_TRAIN_USE_INFER_PATH: True
+    FREEZE_CERBERUS_BRANCH: False
+    UNFREEZE_CERBERUS_AT_ITER: 0
+    NUM_PATCHES: 32
+    SCHEMA_PATH: "data_text/PRW/generated_schema.json"
+    ID_ASSIGN:
+      NAME: "det"
+    LOSS:
+      OIM:
+        LB_LAYER: "lb_norm"
+        ULB_LAYER: "ulb_full"
+        LB_FACTOR: 30
+        ULB_FACTOR: 30
+        NUM_LB: 483
+        LEN_ULB: 500
+        FEAT_DIM: 1024
+        NORM_FEAT: True
+        SYNC_MEMORY: False
+        USE_FOCAL: True
+        FOCAL_ALPHA: 1.0
+        FOCAL_GAMMA: 2.0
+        LOSS_WEIGHT: 1.0
+    CWS: True
+SOLVER:
+  OPTIM: "AdamW"
+  BASE_LR: 0.00001
+  MAX_ITER: 21390
+  STEPS: (8556,)
+  CHECKPOINT_PERIOD: 1000
+  WARMUP_ITERS: 713
+  IMS_PER_BATCH: 8
+  LR_FACTORS: [5.0, 5.0, 1.0]
+  LR_GROUP_REGEX: ["proposal_generator.+", "roi_heads.box_predictor.+", "cerberus_branch.+"]
+  WEIGHT_DECAY_BIAS: 0.0
+DATASETS:
+  TRAIN: ("PRW_TBPS_Train",)
+  TEST: ("PRW_TBPS_Gallery", "PRW_TBPS_Query",)
+TEST:
+  EVAL_PERIOD: 0
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus"
+INPUT:
+  LOAD_ATTRIBUTES: True
+  ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_train.json"
+  TEST_ATTRIBUTE_ANNOTATIONS_PATH: "data_text/PRW/prw_Final_Complete_cleaned_test.json"

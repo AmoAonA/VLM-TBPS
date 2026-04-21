@@ -1,0 +1,4 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+TEST:
+  COARSE_TOPK: 500  # 先用全局特征筛选 top-500，再计算属性得分
+OUTPUT_DIR: "outputs/viper_cerberus_coarse_topk500"

@@ -1,0 +1,6 @@
+_BASE_: "clipviper_cuhk.yaml"
+
+TEST:
+  EVAL_PERIOD: 0
+
+OUTPUT_DIR: "outputs/viper/CUHK-SYSU/clipviper_cuhk_stage1_baseline"

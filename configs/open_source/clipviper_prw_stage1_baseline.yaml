@@ -1,0 +1,3 @@
+_BASE_: "../../configs/person_search/viper/clipviper_prw.yaml"
+
+OUTPUT_DIR: "outputs/viper/PRW/clipviper_prw_stage1_baseline"

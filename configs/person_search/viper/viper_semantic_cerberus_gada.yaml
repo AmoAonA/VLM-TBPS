@@ -1,0 +1,14 @@
+_BASE_: "viper_semantic_cerberus.yaml"
+
+PERSON_SEARCH:
+  REID:
+    USE_CERBERUS_MEMORY_BANK: False
+    USE_CERBERUS_GADA: True
+    CERBERUS_GADA_WEIGHT: 0.5
+    USE_CERBERUS_BRDA: False
+
+SOLVER:
+  IMS_PER_BATCH: 4
+  BASE_LR: 0.000005
+
+OUTPUT_DIR: "outputs/viper/PRW/viper_semantic_cerberus_gada"

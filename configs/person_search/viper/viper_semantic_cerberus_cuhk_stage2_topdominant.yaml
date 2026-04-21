@@ -1,0 +1,21 @@
+_BASE_: "viper_semantic_cerberus_cuhk_stage2_attr_from_stage1_bnneckfalse.yaml"
+
+PERSON_SEARCH:
+  REID:
+    CERBERUS_PROTOTYPE_ALIGN_WEIGHT: 0.05
+    CERBERUS_QUERY_UNKNOWN_WEIGHT: 0.15
+    CERBERUS_TRAIN_UNKNOWN_WEIGHT: 0.25
+    CERBERUS_TRAIN_GROUP_WEIGHT_MODE: "avg"
+    CERBERUS_GROUP_LOSS_WEIGHTS: [0.6, 0.15, 2.0, 0.3, 0.1]
+
+SOLVER:
+  MAX_ITER: 22400
+  STEPS: (13000,)
+  WARMUP_ITERS: 1400
+  CHECKPOINT_PERIOD: 1400
+  IMS_PER_BATCH: 8
+
+TEST:
+  EVAL_PERIOD: 0
+
+OUTPUT_DIR: "outputs/viper/CUHK-SYSU/viper_semantic_cerberus_cuhk_stage2_topdominant"
