@@ -81,6 +81,22 @@ bash scripts/check_dataset_layout.sh
 
 ### Training
 
+#### CUHK-SYSU stage1 (official ViPer baseline)
+
+This step uses the clean official ViPer training path and serves as the
+stage1 baseline before our stage2 attribute-word branch training.
+
+```bash
+export OFFICIAL_VIPER_ROOT=/path/to/official_viper
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
+export RUN_EVAL_AFTER=1
+
+bash scripts/run_cuhk_stage1_official.sh
+```
+
 #### PRW stage1
 
 ```bash
@@ -242,6 +258,21 @@ bash scripts/check_dataset_layout.sh
 ```
 
 ### 训练
+
+#### CUHK-SYSU 一阶段（官方 ViPer baseline）
+
+这一步走的是干净的官方 ViPer 一阶段训练流程，作为后续二阶段属性词分支训练的基础模型。
+
+```bash
+export OFFICIAL_VIPER_ROOT=/path/to/official_viper
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export NUM_GPUS=1
+export RUN_EVAL_AFTER=1
+
+bash scripts/run_cuhk_stage1_official.sh
+```
 
 #### PRW 一阶段
 
