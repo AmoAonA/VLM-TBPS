@@ -21,7 +21,6 @@ This repository contains our attribute-word enhanced text-based person search fr
 - PRW stage1 training
 - PRW stage2 attribute-word branch training
 - PRW full-checkpoint evaluation
-- PRW cache-based evaluation
 - CUHK-SYSU stage2 attribute-word branch training
 - CUHK-SYSU positive-only rerank evaluation
 - bundled text / schema files under `data_text/`
@@ -136,9 +135,6 @@ export RUN_EVAL_AFTER=1
 bash scripts/run_cuhk_stage2.sh
 ```
 
-For a stricter clean-official reproduction path, you may still use
-`scripts/run_cuhk_stage1_official.sh` with a separate official ViPer checkout.
-
 ### Evaluation
 
 #### PRW stage2 checkpoint evaluation
@@ -151,21 +147,6 @@ export CKPT=/path/to/prw_stage2/model_final.pth
 export FUSION_MODE=avg
 
 bash scripts/eval_prw_stage2.sh
-```
-
-#### PRW cache evaluation
-
-This path is mainly used for cache-based re-evaluation and ablation, rather than the primary full-checkpoint evaluation.
-
-```bash
-export PYTHON_BIN=python
-export DEVICE=cuda:0
-export FUSION_MODE=avg
-export QUERY_BATCH_SIZE=1024
-export GALLERY_FILE=/path/to/_gallery_gt_inf.pt
-export QUERY_FILE=/path/to/_query_inf.pt
-
-bash scripts/eval_prw_cache.sh
 ```
 
 #### CUHK-SYSU stage2 checkpoint evaluation
@@ -219,7 +200,6 @@ This codebase is built on top of the ViPer / Detectron-style person search frame
 - PRW 一阶段训练
 - PRW 二阶段属性词分支训练
 - PRW 整 ckpt 评测
-- PRW 基于缓存的评测
 - CUHK-SYSU 二阶段属性词分支训练
 - CUHK-SYSU 正向 rerank 评测
 - `data_text/` 中附带的文本 / 属性 / schema 文件
@@ -333,9 +313,6 @@ export RUN_EVAL_AFTER=1
 bash scripts/run_cuhk_stage2.sh
 ```
 
-如果需要更严格的官方干净复现路径，也可以单独配合官方 ViPer 仓库使用
-`scripts/run_cuhk_stage1_official.sh`。
-
 ### 评测
 
 #### PRW 二阶段整 ckpt 评测
@@ -348,21 +325,6 @@ export CKPT=/path/to/prw_stage2/model_final.pth
 export FUSION_MODE=avg
 
 bash scripts/eval_prw_stage2.sh
-```
-
-#### PRW 缓存评测
-
-这一路径主要用于基于缓存的复评和消融，不是主线的整 ckpt 评测入口。
-
-```bash
-export PYTHON_BIN=python
-export DEVICE=cuda:0
-export FUSION_MODE=avg
-export QUERY_BATCH_SIZE=1024
-export GALLERY_FILE=/path/to/_gallery_gt_inf.pt
-export QUERY_FILE=/path/to/_query_inf.pt
-
-bash scripts/eval_prw_cache.sh
 ```
 
 #### CUHK-SYSU 二阶段模型评测
