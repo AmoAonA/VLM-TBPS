@@ -43,7 +43,6 @@ So cloning this repo is **not** enough by itself; you still need a working `dete
 
 ```bash
 python tools/train_ps_net.py --help
-python tools/eval_search_from_cache.py --help
 ```
 
 If both commands work, the code entrypoints are installed correctly.

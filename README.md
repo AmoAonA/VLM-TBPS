@@ -175,7 +175,7 @@ bash scripts/run_cuhk_stage2.sh
 ├── data_text/          # Released text / attribute annotations
 ├── psd2/               # Core library
 ├── scripts/            # Training / evaluation shell scripts
-├── tools/              # Python entrypoints and utilities
+├── tools/              # Main Python entrypoint
 ├── ENVIRONMENT.md      # Environment notes
 ├── requirements.txt    # Python dependencies
 └── README.md
@@ -353,7 +353,7 @@ bash scripts/run_cuhk_stage2.sh
 ├── data_text/          # 开源的文本 / 属性标注
 ├── psd2/               # 核心代码库
 ├── scripts/            # 训练 / 评测脚本
-├── tools/              # Python 入口与工具脚本
+├── tools/              # 主 Python 入口
 ├── ENVIRONMENT.md      # 环境说明
 ├── requirements.txt    # Python 依赖
 └── README.md
