@@ -20,6 +20,7 @@ This repository contains our attribute-word enhanced text-based person search fr
 - CUHK-SYSU stage1 baseline
 - PRW stage1 training
 - PRW stage2 attribute-word branch training
+- PRW full-checkpoint evaluation
 - PRW cache-based evaluation
 - CUHK-SYSU stage2 attribute-word branch training
 - CUHK-SYSU positive-only rerank evaluation
@@ -117,6 +118,7 @@ export PYTHON_BIN=python
 export CUDA_VISIBLE_DEVICES=0
 export NUM_GPUS=1
 export STAGE1_CKPT=/path/to/prw_stage1/model_final.pth
+export RUN_EVAL_AFTER=1
 
 bash scripts/run_prw_stage2.sh
 ```
@@ -139,7 +141,21 @@ For a stricter clean-official reproduction path, you may still use
 
 ### Evaluation
 
+#### PRW stage2 checkpoint evaluation
+
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export CKPT=/path/to/prw_stage2/model_final.pth
+export FUSION_MODE=avg
+
+bash scripts/eval_prw_stage2.sh
+```
+
 #### PRW cache evaluation
+
+This path is mainly used for cache-based re-evaluation and ablation, rather than the primary full-checkpoint evaluation.
 
 ```bash
 export PYTHON_BIN=python
@@ -202,6 +218,7 @@ This codebase is built on top of the ViPer / Detectron-style person search frame
 - CUHK-SYSU 一阶段 baseline
 - PRW 一阶段训练
 - PRW 二阶段属性词分支训练
+- PRW 整 ckpt 评测
 - PRW 基于缓存的评测
 - CUHK-SYSU 二阶段属性词分支训练
 - CUHK-SYSU 正向 rerank 评测
@@ -298,6 +315,7 @@ export PYTHON_BIN=python
 export CUDA_VISIBLE_DEVICES=0
 export NUM_GPUS=1
 export STAGE1_CKPT=/path/to/prw_stage1/model_final.pth
+export RUN_EVAL_AFTER=1
 
 bash scripts/run_prw_stage2.sh
 ```
@@ -320,7 +338,21 @@ bash scripts/run_cuhk_stage2.sh
 
 ### 评测
 
+#### PRW 二阶段整 ckpt 评测
+
+```bash
+export DATA_ROOT=/path/to/dataset
+export PYTHON_BIN=python
+export CUDA_VISIBLE_DEVICES=0
+export CKPT=/path/to/prw_stage2/model_final.pth
+export FUSION_MODE=avg
+
+bash scripts/eval_prw_stage2.sh
+```
+
 #### PRW 缓存评测
+
+这一路径主要用于基于缓存的复评和消融，不是主线的整 ckpt 评测入口。
 
 ```bash
 export PYTHON_BIN=python
