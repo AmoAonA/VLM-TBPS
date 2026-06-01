@@ -11,8 +11,6 @@
 <a name="english"></a>
 ## English
 
-Official implementation of **"Closing the Modality Gap with Symbols: Explicit Attribute Alignment for End-to-End Text-Based Person Search"**, accepted to **ACM MM 2026**.
-
 ### Overview
 
 This repository contains our attribute-word enhanced text-based person search framework built on top of the ViPer pipeline. The released code supports:
@@ -189,8 +187,6 @@ This codebase is built on top of the ViPer / Detectron-style person search frame
 
 <a name="中文"></a>
 ## 中文
-
-这是论文 **《以符号弥合模态鸿沟：面向端到端文本行人搜索的显式属性对齐》** 的官方实现，发表于 **ACM MM 2026**。
 
 ### 概述
 
